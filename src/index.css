@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 224 71.4% 4.1%;
+  --card: 0 0% 100%;
+  --card-foreground: 224 71.4% 4.1%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 224 71.4% 4.1%;
+  --primary: 262.1 83.3% 57.8%;
+  --primary-foreground: 355.7 100% 97.3%;
+  --secondary: 220 14.3% 95.9%;
+  --secondary-foreground: 220.9 39.3% 11%;
+  --muted: 220 14.3% 95.9%;
+  --muted-foreground: 225.9 10.3% 42.4%;
+  --accent: 220 14.3% 95.9%;
+  --accent-foreground: 220.9 39.3% 11%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 355.7 100% 97.3%;
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 262.1 83.3% 57.8%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 224 71.4% 4.1%;
+  --foreground: 210 20% 98%;
+  --card: 224 71.4% 4.1%;
+  --card-foreground: 210 20% 98%;
+  --popover: 224 71.4% 4.1%;
+  --popover-foreground: 210 20% 98%;
+  --primary: 263.4 70% 50.4%;
+  --primary-foreground: 210 20% 98%;
+  --secondary: 215 27.9% 16.9%;
+  --secondary-foreground: 210 20% 98%;
+  --muted: 215 27.9% 16.9%;
+  --muted-foreground: 217.9 10.6% 64.9%;
+  --accent: 215 27.9% 16.9%;
+  --accent-foreground: 210 20% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 20% 98%;
+  --border: 215 27.9% 16.9%;
+  --input: 215 27.9% 16.9%;
+  --ring: 263.4 70% 50.4%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glassmorphism {
+  background: rgba(30, 41, 59, 0.3); /* Ajustado para tema oscuro */
+  border: 1px solid rgba(50, 61, 79, 0.5);
+}
+
+
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500;
+}
+
+/* Animaciones sutiles para botones y cards */
+.btn-animated {
+  @apply transition-transform duration-300 ease-out;
+}
+.btn-animated:hover {
+  @apply scale-105;
+}
+
+.card-animated {
+  @apply transition-all duration-300 ease-out;
+}
+.card-animated:hover {
+  @apply shadow-2xl -translate-y-1;
+}
+
+/* Estilos para el scrollbar (opcional, mejora estética) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.7);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary));
+}
+
+/* Estilos específicos para inputs y textareas */
+input[type="text"],
+input[type="email"],
+textarea {
+  @apply w-full px-4 py-3 rounded-lg border-gray-300 dark:border-gray-600 focus:border-purple-500 focus:ring-purple-500 dark:bg-gray-700 dark:text-white transition-shadow shadow-sm focus:shadow-md;
+}
+
+/* Mejoras de accesibilidad para focus */
+*:focus-visible {
+  @apply ring-2 ring-offset-2 ring-ring ring-offset-background;
+  outline: none;
+}
+
+/* Clases para gradientes comunes */
+.bg-gradient-primary-hero {
+  @apply bg-gradient-to-br from-purple-700 via-indigo-600 to-blue-500;
+}
+
+.bg-gradient-cta {
+  @apply bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700;
+}
+
+/* Estilos para el footer */
+footer a:hover {
+  @apply text-purple-400 transition-colors;
+}
+
+/* Estilos para la navegación móvil */
+.mobile-nav-link {
+  @apply block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 ease-in-out;
+}
+.mobile-nav-link-active {
+  @apply bg-purple-600 text-white shadow-md;
+}
+.mobile-nav-link-inactive {
+  @apply text-gray-300 hover:bg-gray-700 hover:text-white;
+}
+
+/* Estilos para los cards de funcionalidades */
+.feature-card-icon-wrapper {
+  @apply p-4 rounded-full text-white mb-4 inline-block;
+}
+
+/* Estilos para los cards de precios */
+.price-card-popular-badge {
+  @apply absolute top-0 right-0 bg-yellow-400 text-gray-900 px-4 py-1 text-sm font-bold rounded-bl-lg;
+}
