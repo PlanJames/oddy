@@ -12,13 +12,15 @@ if (!$data || !isset($data->email, $data->password)) {
   exit;
 }
 
-$email = $conn->real_escape_string($data->email);
+$email = trim($data->email);
 $password = $data->password;
 
-$sql = "SELECT * FROM usuarios WHERE email = '$email'";
-$result = $conn->query($sql);
+$stmt = $conn->prepare("SELECT nombre, password FROM usuarios WHERE email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
 
-if ($result->num_rows === 1) {
+if ($result && $result->num_rows === 1) {
   $user = $result->fetch_assoc();
   if (password_verify($password, $user['password'])) {
     echo json_encode(["status" => "success", "nombre" => $user['nombre']]);
@@ -29,5 +31,6 @@ if ($result->num_rows === 1) {
   echo json_encode(["status" => "error", "message" => "Usuario no encontrado"]);
 }
 
+$stmt->close();
 $conn->close();
 ?>
