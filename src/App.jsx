@@ -31,7 +31,7 @@ function App() {
               <Route path="/precios" element={<PageLayout><PreciosPage /></PageLayout>} />
               <Route path="/faq" element={<PageLayout><FaqPage /></PageLayout>} />
               <Route path="/contacto" element={<PageLayout><ContactoPage /></PageLayout>} />
-              <Route path="/register" element={<PageLayout><RegisterPage /></PageLayout>} />
+              <Route path="/crear-cuenta" element={<PageLayout><RegisterPage /></PageLayout>} />
               <Route path="/login" element={<PageLayout><LoginPage /></PageLayout>} />
             </Routes>
           </AnimatePresence>

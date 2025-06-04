@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: POST");
@@ -7,23 +11,42 @@ require 'db.php';
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (!$data || !isset($data->nombre, $data->email, $data->password)) {
-  echo json_encode(["status" => "error", "message" => "Faltan datos o JSON malformado"]);
+if (!$data) {
+  echo json_encode(["status" => "error", "message" => "No se recibió información."]);
   exit;
 }
 
-$nombre = $conn->real_escape_string($data->nombre);
-$email = $conn->real_escape_string($data->email);
-$password = password_hash($data->password, PASSWORD_DEFAULT);
+$negocio = $conn->real_escape_string($data->negocio ?? '');
+$encargado = $conn->real_escape_string($data->encargado ?? '');
+$telefono = $conn->real_escape_string($data->telefono ?? '');
+$email = $conn->real_escape_string($data->email ?? '');
+$password = $data->password ?? '';
 
-// check si el email ya existe
-$check = $conn->query("SELECT id FROM usuarios WHERE email = '$email'");
-if ($check && $check->num_rows > 0) {
-  echo json_encode(["status" => "error", "message" => "Ese email ya está registrado."]);
+// Validaciones mínimas
+if (!$email || !$password || !$negocio || !$encargado) {
+  echo json_encode(["status" => "error", "message" => "Faltan datos obligatorios."]);
   exit;
 }
 
-$sql = "INSERT INTO usuarios (nombre, email, password) VALUES ('$nombre', '$email', '$password')";
+// Validación de seguridad de contraseña
+if (
+  strlen($password) < 8 ||
+  !preg_match('/[A-Z]/', $password) ||
+  !preg_match('/[a-z]/', $password) ||
+  !preg_match('/[0-9]/', $password)
+) {
+  echo json_encode([
+    "status" => "error",
+    "message" => "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número."
+  ]);
+  exit;
+}
+
+$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+
+$sql = "INSERT INTO usuarios (negocio, encargado, telefono, email, password)
+        VALUES ('$negocio', '$encargado', '$telefono', '$email', '$hashedPassword')";
 
 if ($conn->query($sql)) {
   echo json_encode(["status" => "success"]);
@@ -32,3 +55,4 @@ if ($conn->query($sql)) {
 }
 
 $conn->close();
+?>

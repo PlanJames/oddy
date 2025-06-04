@@ -14,7 +14,7 @@ export const navLinks = [
   { name: 'Preguntas Frecuentes', path: '/faq', icon: HelpCircle },
   { name: 'Contacto', path: '/contacto', icon: Phone },
   { name: 'Login', path: '/login', icon: LogIn },
-  { name: 'Prueba Gratis', path: '/register', icon: UserPlus },
+  { name: 'Prueba Gratis', path: '/crear-cuenta', icon: UserPlus },
 ];
 
 const Navbar = () => {
