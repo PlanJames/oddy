@@ -15,7 +15,7 @@ const pricingPlans = [
       'Soporte Técnico Preferencial por 12 meses',
       '5hs de capacitación presencial (aplica unicamente Rosario) y 1 año de capacitación a distancia parcial. Videollamadas 1v1. '
     ], 
-    popular: true, 
+    popular: false,
     color: 'from-purple-500 to-purple-600', 
     buttonClass: 'bg-yellow-400 hover:bg-yellow-500 text-gray-900' 
   },
@@ -69,11 +69,12 @@ const PreciosPage = () => (
                 </li>
               ))}
             </ul>
-            <Button 
+            <Button
               className={`w-full font-bold btn-animated ${plan.buttonClass}`}
               size="lg"
+              asChild
             >
-              Elegir Plan
+              <Link to="/register">Elegir Plan</Link>
             </Button>
           </div>
         </motion.div>
