@@ -14,6 +14,7 @@ import FaqPage from '@/pages/FaqPage';
 import ContactoPage from '@/pages/ContactoPage';
 import LoginPage from '@/pages/LoginPage';
 import RegisterPage from '@/pages/RegisterPage';
+import NotFoundPage from '@/pages/NotFoundPage';
 
 import { Toaster } from '@/components/ui/toaster';
 
@@ -33,6 +34,7 @@ function App() {
               <Route path="/contacto" element={<PageLayout><ContactoPage /></PageLayout>} />
               <Route path="/crear-cuenta" element={<PageLayout><RegisterPage /></PageLayout>} />
               <Route path="/login" element={<PageLayout><LoginPage /></PageLayout>} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </AnimatePresence>
         </main>
