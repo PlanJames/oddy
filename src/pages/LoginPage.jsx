@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { useToast } from '@/components/ui/use-toast';
+import { Eye, EyeOff } from 'lucide-react';
 
 const LoginPage = () => {
   const { toast } = useToast();
+
   const [formData, setFormData] = useState({ email: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,10 +34,7 @@ const LoginPage = () => {
           title: "Bienvenido, " + data.nombre,
           description: "Inicio de sesión exitoso.",
         });
-
-        // Ejemplo: guardar en localStorage o redireccionar
-        // localStorage.setItem("usuario", JSON.stringify(data));
-        // window.location.href = "/panel";
+        // window.location.href = "/dashboard"; // si querés redirigir
       } else {
         toast({
           title: "Error de inicio de sesión",
@@ -45,7 +45,7 @@ const LoginPage = () => {
     } catch (error) {
       console.error("Error:", error);
       toast({
-        title: "Error del servidor",
+        title: "Error de servidor",
         description: "No se pudo conectar con el backend.",
         variant: "destructive",
       });
@@ -83,16 +83,25 @@ const LoginPage = () => {
             <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
               Contraseña
             </label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              placeholder="********"
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-purple-500 focus:ring-purple-500 dark:bg-gray-700 dark:text-white transition-shadow shadow-sm focus:shadow-md"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                id="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                placeholder="********"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-purple-500 focus:ring-purple-500 dark:bg-gray-700 dark:text-white transition-shadow shadow-sm focus:shadow-md pr-12"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 dark:hover:text-white"
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
           </div>
 
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
