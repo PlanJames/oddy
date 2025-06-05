@@ -86,7 +86,7 @@
   @apply transition-all duration-300 ease-out;
 }
 .card-animated:hover {
-  @apply shadow-2xl -translate-y-1;
+  @apply -translate-y-2 scale-105 shadow-lg shadow-gray-400/60;
 }
 
 /* Estilos para el scrollbar (opcional, mejora estética) */
